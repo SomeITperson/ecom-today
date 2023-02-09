@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  webapp:
+    restart: always
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    command: ["python3", "./ecomtoday/manage.py", "runserver", "127.0.0.1:8000"]
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.10
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: "password"
+      MARIADB_DATABASE: "ecomtoday"
+      MARIADB_USER: "ecomtoday"
+      MARIADB_PASSWORD: "password"
+    ports:
+      - "3302:3306"
